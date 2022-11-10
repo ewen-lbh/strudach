@@ -1,0 +1,517 @@
+in database_new.json:
+- .abstract-wallpapers-per-color-scheme: Object has additional property `footnotes`
+- .abstract-wallpapers-per-color-scheme: Object has additional property `links`
+- .abstract-wallpapers-per-color-scheme: Object has additional property `media`
+- .abstract-wallpapers-per-color-scheme.metadata.aliases: Value has type array, which does not match type array
+- .abstract-wallpapers-per-color-scheme.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .abstract-wallpapers-per-color-scheme.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .abstract-wallpapers-per-color-scheme.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .abstract-wallpapers-per-color-scheme.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .abstract-wallpapers-per-color-scheme.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .abstract-wallpapers-per-color-scheme.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .abstract-wallpapers-per-color-scheme.metadata.made with: Value has type array, which does not match type array
+- .abstract-wallpapers-per-color-scheme.metadata.tags: Value has type array, which does not match type array
+- .abstract-wallpapers-per-color-scheme.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .abstract-wallpapers-per-color-scheme: Object has additional property `paragraphs`
+- .abstract-wallpapers-per-color-scheme: Object has additional property `title`
+- .abstract-wallpapers-per-color-scheme: Object is missing properties `layout`, `content`
+- .abstrakitten: Object has additional property `footnotes`
+- .abstrakitten: Object has additional property `links`
+- .abstrakitten: Object has additional property `media`
+- .abstrakitten.metadata.aliases: Value has type array, which does not match type array
+- .abstrakitten.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .abstrakitten.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .abstrakitten.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .abstrakitten.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .abstrakitten.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .abstrakitten.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .abstrakitten.metadata.made with: Value has type array, which does not match type array
+- .abstrakitten.metadata.started: String is not a valid date: Parser Error: 
+- .abstrakitten.metadata.tags: Value has type array, which does not match type array
+- .abstrakitten.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .abstrakitten: Object has additional property `paragraphs`
+- .abstrakitten: Object has additional property `title`
+- .abstrakitten: Object is missing properties `layout`, `content`
+- .acf-actualités-du-cartel-2019: Object has additional property `footnotes`
+- .acf-actualités-du-cartel-2019: Object has additional property `links`
+- .acf-actualités-du-cartel-2019: Object has additional property `media`
+- .acf-actualités-du-cartel-2019.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-actualités-du-cartel-2019.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-actualités-du-cartel-2019.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-actualités-du-cartel-2019.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-actualités-du-cartel-2019.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .acf-actualités-du-cartel-2019.metadata.made with: Value has type array, which does not match type array
+- .acf-actualités-du-cartel-2019.metadata.tags: Value has type array, which does not match type array
+- .acf-actualités-du-cartel-2019.metadata: Object is missing properties `aliases`, `titlestyle`, `wip`, `page background`
+- .acf-actualités-du-cartel-2019: Object has additional property `paragraphs`
+- .acf-actualités-du-cartel-2019: Object has additional property `title`
+- .acf-actualités-du-cartel-2019: Object is missing properties `layout`, `content`
+- .acf-choses-de-finesse-en-psychanalyse: Object has additional property `footnotes`
+- .acf-choses-de-finesse-en-psychanalyse: Object has additional property `links`
+- .acf-choses-de-finesse-en-psychanalyse: Object has additional property `media`
+- .acf-choses-de-finesse-en-psychanalyse.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-choses-de-finesse-en-psychanalyse.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-choses-de-finesse-en-psychanalyse.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-choses-de-finesse-en-psychanalyse.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-choses-de-finesse-en-psychanalyse.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .acf-choses-de-finesse-en-psychanalyse.metadata.made with: Value has type array, which does not match type array
+- .acf-choses-de-finesse-en-psychanalyse.metadata.tags: Value has type array, which does not match type array
+- .acf-choses-de-finesse-en-psychanalyse.metadata: Object is missing properties `aliases`, `titlestyle`, `thumbnail`, `wip`, `page background`
+- .acf-choses-de-finesse-en-psychanalyse: Object has additional property `paragraphs`
+- .acf-choses-de-finesse-en-psychanalyse: Object has additional property `title`
+- .acf-choses-de-finesse-en-psychanalyse: Object is missing properties `layout`, `content`
+- .acf-conférence-eric-zuliani: Object has additional property `footnotes`
+- .acf-conférence-eric-zuliani: Object has additional property `links`
+- .acf-conférence-eric-zuliani: Object has additional property `media`
+- .acf-conférence-eric-zuliani.metadata.aliases: Value has type array, which does not match type array
+- .acf-conférence-eric-zuliani.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-conférence-eric-zuliani.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-conférence-eric-zuliani.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-conférence-eric-zuliani.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-conférence-eric-zuliani.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-conférence-eric-zuliani.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .acf-conférence-eric-zuliani.metadata.made with: Value has type array, which does not match type array
+- .acf-conférence-eric-zuliani.metadata.tags: Value has type array, which does not match type array
+- .acf-conférence-eric-zuliani.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .acf-conférence-eric-zuliani: Object has additional property `paragraphs`
+- .acf-conférence-eric-zuliani: Object has additional property `title`
+- .acf-conférence-eric-zuliani: Object is missing properties `layout`, `content`
+- .acf-conférence-laurent-dupont: Object has additional property `footnotes`
+- .acf-conférence-laurent-dupont: Object has additional property `links`
+- .acf-conférence-laurent-dupont: Object has additional property `media`
+- .acf-conférence-laurent-dupont.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-conférence-laurent-dupont.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-conférence-laurent-dupont.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-conférence-laurent-dupont.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-conférence-laurent-dupont.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .acf-conférence-laurent-dupont.metadata.made with: Value has type array, which does not match type array
+- .acf-conférence-laurent-dupont.metadata.tags: Value has type array, which does not match type array
+- .acf-conférence-laurent-dupont.metadata: Object is missing properties `aliases`, `titlestyle`, `wip`, `page background`, `started`
+- .acf-conférence-laurent-dupont: Object has additional property `paragraphs`
+- .acf-conférence-laurent-dupont: Object has additional property `title`
+- .acf-conférence-laurent-dupont: Object is missing properties `layout`, `content`
+- .acf-crise-principe-organisateur-famille: Object has additional property `footnotes`
+- .acf-crise-principe-organisateur-famille: Object has additional property `links`
+- .acf-crise-principe-organisateur-famille: Object has additional property `media`
+- .acf-crise-principe-organisateur-famille.metadata.aliases: Value has type array, which does not match type array
+- .acf-crise-principe-organisateur-famille.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-crise-principe-organisateur-famille.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-crise-principe-organisateur-famille.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-crise-principe-organisateur-famille.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-crise-principe-organisateur-famille.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-crise-principe-organisateur-famille.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .acf-crise-principe-organisateur-famille.metadata.made with: Value has type array, which does not match type array
+- .acf-crise-principe-organisateur-famille.metadata.tags: Value has type array, which does not match type array
+- .acf-crise-principe-organisateur-famille.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .acf-crise-principe-organisateur-famille.metadata: Object is missing properties `finished`, `thumbnail`, `started`
+- .acf-crise-principe-organisateur-famille: Object has additional property `paragraphs`
+- .acf-crise-principe-organisateur-famille: Object has additional property `title`
+- .acf-crise-principe-organisateur-famille: Object is missing properties `layout`, `content`
+- .acf-de-l-une-a-l-autre: Object has additional property `footnotes`
+- .acf-de-l-une-a-l-autre: Object has additional property `links`
+- .acf-de-l-une-a-l-autre: Object has additional property `media`
+- .acf-de-l-une-a-l-autre.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-de-l-une-a-l-autre.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-de-l-une-a-l-autre.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-de-l-une-a-l-autre.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-de-l-une-a-l-autre.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .acf-de-l-une-a-l-autre.metadata.made with: Value has type array, which does not match type array
+- .acf-de-l-une-a-l-autre.metadata.tags: Value has type array, which does not match type array
+- .acf-de-l-une-a-l-autre.metadata: Object is missing properties `aliases`, `titlestyle`, `wip`, `page background`, `started`
+- .acf-de-l-une-a-l-autre: Object has additional property `paragraphs`
+- .acf-de-l-une-a-l-autre: Object has additional property `title`
+- .acf-de-l-une-a-l-autre: Object is missing properties `layout`, `content`
+- .acf-illimité: Object has additional property `footnotes`
+- .acf-illimité: Object has additional property `links`
+- .acf-illimité: Object has additional property `media`
+- .acf-illimité.metadata.aliases: Value has type array, which does not match type array
+- .acf-illimité.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-illimité.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-illimité.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-illimité.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-illimité.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-illimité.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .acf-illimité.metadata.made with: Value has type array, which does not match type array
+- .acf-illimité.metadata.tags: Value has type array, which does not match type array
+- .acf-illimité.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .acf-illimité.metadata: Object is missing property `thumbnail`
+- .acf-illimité: Object has additional property `paragraphs`
+- .acf-illimité: Object has additional property `title`
+- .acf-illimité: Object is missing properties `layout`, `content`
+- .acf-je-suis-ce-que-je-dis: Object has additional property `footnotes`
+- .acf-je-suis-ce-que-je-dis: Object has additional property `links`
+- .acf-je-suis-ce-que-je-dis: Object has additional property `media`
+- .acf-je-suis-ce-que-je-dis.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-je-suis-ce-que-je-dis.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-je-suis-ce-que-je-dis.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-je-suis-ce-que-je-dis.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-je-suis-ce-que-je-dis.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .acf-je-suis-ce-que-je-dis.metadata.made with: Value has type array, which does not match type array
+- .acf-je-suis-ce-que-je-dis.metadata.tags: Value has type array, which does not match type array
+- .acf-je-suis-ce-que-je-dis.metadata: Object is missing properties `aliases`, `titlestyle`, `thumbnail`, `wip`, `page background`
+- .acf-je-suis-ce-que-je-dis: Object has additional property `paragraphs`
+- .acf-je-suis-ce-que-je-dis: Object has additional property `title`
+- .acf-je-suis-ce-que-je-dis: Object is missing properties `layout`, `content`
+- .acf-le-rêve-éclair-e: Object has additional property `footnotes`
+- .acf-le-rêve-éclair-e: Object has additional property `links`
+- .acf-le-rêve-éclair-e: Object has additional property `media`
+- .acf-le-rêve-éclair-e.metadata.aliases: Value has type array, which does not match type array
+- .acf-le-rêve-éclair-e.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-le-rêve-éclair-e.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-le-rêve-éclair-e.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-le-rêve-éclair-e.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-le-rêve-éclair-e.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-le-rêve-éclair-e.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .acf-le-rêve-éclair-e.metadata.made with: Value has type array, which does not match type array
+- .acf-le-rêve-éclair-e.metadata.started: String is not a valid date: Parser Error: 
+- .acf-le-rêve-éclair-e.metadata.tags: Value has type array, which does not match type array
+- .acf-le-rêve-éclair-e.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .acf-le-rêve-éclair-e: Object has additional property `paragraphs`
+- .acf-le-rêve-éclair-e: Object has additional property `title`
+- .acf-le-rêve-éclair-e: Object is missing properties `layout`, `content`
+- .acf-qu-est-ce-qui-fait-violence: Object has additional property `footnotes`
+- .acf-qu-est-ce-qui-fait-violence: Object has additional property `links`
+- .acf-qu-est-ce-qui-fait-violence: Object has additional property `media`
+- .acf-qu-est-ce-qui-fait-violence.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-qu-est-ce-qui-fait-violence.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-qu-est-ce-qui-fait-violence.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-qu-est-ce-qui-fait-violence.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-qu-est-ce-qui-fait-violence.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .acf-qu-est-ce-qui-fait-violence.metadata.made with: Value has type array, which does not match type array
+- .acf-qu-est-ce-qui-fait-violence.metadata.tags: Value has type array, which does not match type array
+- .acf-qu-est-ce-qui-fait-violence.metadata: Object is missing properties `aliases`, `titlestyle`, `wip`, `page background`, `started`
+- .acf-qu-est-ce-qui-fait-violence: Object has additional property `paragraphs`
+- .acf-qu-est-ce-qui-fait-violence: Object has additional property `title`
+- .acf-qu-est-ce-qui-fait-violence: Object is missing properties `layout`, `content`
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant: Object has additional property `footnotes`
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant: Object has additional property `links`
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant: Object has additional property `media`
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.made with: Value has type array, which does not match type array
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata.tags: Value has type array, which does not match type array
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant.metadata: Object is missing properties `aliases`, `titlestyle`, `wip`, `page background`, `started`
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant: Object has additional property `paragraphs`
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant: Object has additional property `title`
+- .acf-quelle-vérité-révèle-le-symptome-de-l-enfant: Object is missing properties `layout`, `content`
+- .acf-écoute-à-interprétation: Object has additional property `footnotes`
+- .acf-écoute-à-interprétation: Object has additional property `links`
+- .acf-écoute-à-interprétation: Object has additional property `media`
+- .acf-écoute-à-interprétation.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-écoute-à-interprétation.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .acf-écoute-à-interprétation.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .acf-écoute-à-interprétation.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .acf-écoute-à-interprétation.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .acf-écoute-à-interprétation.metadata.made with: Value has type array, which does not match type array
+- .acf-écoute-à-interprétation.metadata.tags: Value has type array, which does not match type array
+- .acf-écoute-à-interprétation.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `wip`, `page background`, `started`
+- .acf-écoute-à-interprétation: Object has additional property `paragraphs`
+- .acf-écoute-à-interprétation: Object has additional property `title`
+- .acf-écoute-à-interprétation: Object is missing properties `layout`, `content`
+- .alphabet-des-formes: Object has additional property `footnotes`
+- .alphabet-des-formes: Object has additional property `links`
+- .alphabet-des-formes: Object has additional property `media`
+- .alphabet-des-formes.metadata.aliases: Value has type array, which does not match type array
+- .alphabet-des-formes.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .alphabet-des-formes.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .alphabet-des-formes.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .alphabet-des-formes.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .alphabet-des-formes.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .alphabet-des-formes.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .alphabet-des-formes.metadata.finished: String is not a valid date: Parser Error: 
+- .alphabet-des-formes.metadata.made with: Value has type array, which does not match type array
+- .alphabet-des-formes.metadata.tags: Value has type array, which does not match type array
+- .alphabet-des-formes.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .alphabet-des-formes: Object has additional property `paragraphs`
+- .alphabet-des-formes: Object has additional property `title`
+- .alphabet-des-formes: Object is missing properties `layout`, `content`
+- .condenses: Object has additional property `footnotes`
+- .condenses: Object has additional property `links`
+- .condenses: Object has additional property `media`
+- .condenses.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .condenses.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .condenses.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .condenses.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .condenses.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .condenses.metadata.made with: Value has type array, which does not match type array
+- .condenses.metadata.tags: Value has type array, which does not match type array
+- .condenses.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `page background`, `started`
+- .condenses: Object has additional property `paragraphs`
+- .condenses: Object has additional property `title`
+- .condenses: Object is missing properties `layout`, `content`
+- .distilatex: Object has additional property `footnotes`
+- .distilatex: Object has additional property `links`
+- .distilatex: Object has additional property `media`
+- .distilatex.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .distilatex.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .distilatex.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .distilatex.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .distilatex.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .distilatex.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .distilatex.metadata.made with: Value has type array, which does not match type array
+- .distilatex.metadata.tags: Value has type array, which does not match type array
+- .distilatex.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `wip`, `page background`, `started`
+- .distilatex: Object has additional property `paragraphs`
+- .distilatex: Object has additional property `title`
+- .distilatex: Object is missing properties `layout`, `content`
+- .flat-fruits: Object has additional property `footnotes`
+- .flat-fruits: Object has additional property `links`
+- .flat-fruits: Object has additional property `media`
+- .flat-fruits.metadata.aliases: Value has type array, which does not match type array
+- .flat-fruits.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .flat-fruits.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .flat-fruits.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .flat-fruits.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .flat-fruits.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .flat-fruits.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .flat-fruits.metadata.made with: Value has type array, which does not match type array
+- .flat-fruits.metadata.started: String is not a valid date: Parser Error: 
+- .flat-fruits.metadata.tags: Value has type array, which does not match type array
+- .flat-fruits.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .flat-fruits.metadata: Object is missing property `finished`
+- .flat-fruits: Object has additional property `paragraphs`
+- .flat-fruits: Object has additional property `title`
+- .flat-fruits: Object is missing properties `layout`, `content`
+- .humanr: Object has additional property `footnotes`
+- .humanr: Object has additional property `links`
+- .humanr: Object has additional property `media`
+- .humanr.metadata.aliases: Value has type array, which does not match type array
+- .humanr.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .humanr.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .humanr.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .humanr.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .humanr.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .humanr.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .humanr.metadata.made with: Value has type array, which does not match type array
+- .humanr.metadata.tags: Value has type array, which does not match type array
+- .humanr.metadata: Object is missing properties `titlestyle`, `thumbnail`, `wip`, `page background`
+- .humanr: Object has additional property `paragraphs`
+- .humanr: Object has additional property `title`
+- .humanr: Object is missing properties `layout`, `content`
+- .ideaseed: Object has additional property `footnotes`
+- .ideaseed: Object has additional property `links`
+- .ideaseed: Object has additional property `media`
+- .ideaseed.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .ideaseed.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .ideaseed.metadata.colors: Custom type `color swatches`: Object is missing properties `primary`, `tertiary`
+- .ideaseed.metadata.made with: Value has type array, which does not match type array
+- .ideaseed.metadata.tags: Value has type array, which does not match type array
+- .ideaseed.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `wip`, `page background`
+- .ideaseed: Object has additional property `paragraphs`
+- .ideaseed: Object has additional property `title`
+- .ideaseed: Object is missing properties `layout`, `content`
+- .inklings: Object has additional property `footnotes`
+- .inklings: Object has additional property `links`
+- .inklings: Object has additional property `media`
+- .inklings.metadata.aliases: Value has type array, which does not match type array
+- .inklings.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .inklings.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .inklings.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .inklings.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .inklings.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .inklings.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .inklings.metadata.finished: String is not a valid date: Parser Error: 
+- .inklings.metadata.made with: Value has type array, which does not match type array
+- .inklings.metadata.tags: Value has type array, which does not match type array
+- .inklings.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .inklings: Object has additional property `paragraphs`
+- .inklings: Object has additional property `title`
+- .inklings: Object is missing properties `layout`, `content`
+- .legmask-spinner: Object has additional property `footnotes`
+- .legmask-spinner: Object has additional property `links`
+- .legmask-spinner: Object has additional property `media`
+- .legmask-spinner.metadata.aliases: Value has type array, which does not match type array
+- .legmask-spinner.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .legmask-spinner.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .legmask-spinner.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .legmask-spinner.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .legmask-spinner.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .legmask-spinner.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .legmask-spinner.metadata.made with: Value has type array, which does not match type array
+- .legmask-spinner.metadata.tags: Value has type array, which does not match type array
+- .legmask-spinner.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .legmask-spinner: Object has additional property `paragraphs`
+- .legmask-spinner: Object has additional property `title`
+- .legmask-spinner: Object is missing properties `layout`, `content`
+- .malwr: Object has additional property `footnotes`
+- .malwr: Object has additional property `links`
+- .malwr: Object has additional property `media`
+- .malwr.metadata.aliases: Value has type array, which does not match type array
+- .malwr.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .malwr.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .malwr.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .malwr.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .malwr.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .malwr.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .malwr.metadata.made with: Value has type array, which does not match type array
+- .malwr.metadata.started: String is not a valid date: Parser Error: 
+- .malwr.metadata.tags: Value has type array, which does not match type array
+- .malwr.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .malwr: Object has additional property `paragraphs`
+- .malwr: Object has additional property `title`
+- .malwr: Object is missing properties `layout`, `content`
+- .neptune: Object has additional property `footnotes`
+- .neptune: Object has additional property `links`
+- .neptune: Object has additional property `media`
+- .neptune.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .neptune.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .neptune.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .neptune.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .neptune.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .neptune.metadata.made with: Value has type array, which does not match type array
+- .neptune.metadata.tags: Value has type array, which does not match type array
+- .neptune.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `started`
+- .neptune: Object has additional property `paragraphs`
+- .neptune: Object has additional property `title`
+- .neptune: Object is missing properties `layout`, `content`
+- .patterns: Object has additional property `footnotes`
+- .patterns: Object has additional property `links`
+- .patterns: Object has additional property `media`
+- .patterns.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .patterns.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .patterns.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .patterns.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .patterns.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .patterns.metadata.made with: Value has type array, which does not match type array
+- .patterns.metadata.tags: Value has type array, which does not match type array
+- .patterns.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `wip`, `started`
+- .patterns: Object has additional property `paragraphs`
+- .patterns: Object has additional property `title`
+- .patterns: Object is missing properties `layout`, `content`
+- .phelng: Object has additional property `footnotes`
+- .phelng: Object has additional property `links`
+- .phelng: Object has additional property `media`
+- .phelng.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .phelng.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .phelng.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .phelng.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .phelng.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .phelng.metadata.made with: Value has type array, which does not match type array
+- .phelng.metadata.tags: Value has type array, which does not match type array
+- .phelng.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `page background`, `started`
+- .phelng: Object has additional property `paragraphs`
+- .phelng: Object has additional property `title`
+- .phelng: Object is missing properties `layout`, `content`
+- .serial: Object has additional property `footnotes`
+- .serial: Object has additional property `links`
+- .serial: Object has additional property `media`
+- .serial.metadata.aliases: Value has type array, which does not match type array
+- .serial.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .serial.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .serial.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .serial.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .serial.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .serial.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .serial.metadata.made with: Value has type array, which does not match type array
+- .serial.metadata.tags: Value has type array, which does not match type array
+- .serial.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .serial: Object has additional property `paragraphs`
+- .serial: Object has additional property `title`
+- .serial: Object is missing properties `layout`, `content`
+- .spotify-playlist-covers: Object has additional property `footnotes`
+- .spotify-playlist-covers: Object has additional property `links`
+- .spotify-playlist-covers: Object has additional property `media`
+- .spotify-playlist-covers.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .spotify-playlist-covers.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .spotify-playlist-covers.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .spotify-playlist-covers.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .spotify-playlist-covers.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .spotify-playlist-covers.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .spotify-playlist-covers.metadata.made with: Value has type array, which does not match type array
+- .spotify-playlist-covers.metadata.tags: Value has type array, which does not match type array
+- .spotify-playlist-covers.metadata: Object is missing properties `aliases`, `titlestyle`, `thumbnail`, `wip`, `page background`
+- .spotify-playlist-covers: Object has additional property `paragraphs`
+- .spotify-playlist-covers: Object has additional property `title`
+- .spotify-playlist-covers: Object is missing properties `layout`, `content`
+- .subfeed-for-spotify: Object has additional property `footnotes`
+- .subfeed-for-spotify: Object has additional property `links`
+- .subfeed-for-spotify: Object has additional property `media`
+- .subfeed-for-spotify.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .subfeed-for-spotify.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .subfeed-for-spotify.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .subfeed-for-spotify.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .subfeed-for-spotify.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .subfeed-for-spotify.metadata.made with: Value has type array, which does not match type array
+- .subfeed-for-spotify.metadata.tags: Value has type array, which does not match type array
+- .subfeed-for-spotify.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `wip`, `page background`, `started`
+- .subfeed-for-spotify: Object has additional property `paragraphs`
+- .subfeed-for-spotify: Object has additional property `title`
+- .subfeed-for-spotify: Object is missing properties `layout`, `content`
+- .the-unconscious-wanders: Object has additional property `footnotes`
+- .the-unconscious-wanders: Object has additional property `links`
+- .the-unconscious-wanders: Object has additional property `media`
+- .the-unconscious-wanders.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .the-unconscious-wanders.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .the-unconscious-wanders.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .the-unconscious-wanders.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .the-unconscious-wanders.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .the-unconscious-wanders.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .the-unconscious-wanders.metadata.tags: Value has type array, which does not match type array
+- .the-unconscious-wanders.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `wip`, `page background`, `made with`
+- .the-unconscious-wanders: Object has additional property `paragraphs`
+- .the-unconscious-wanders: Object has additional property `title`
+- .the-unconscious-wanders: Object is missing properties `layout`, `content`
+- .trigonometry-synth: Object has additional property `footnotes`
+- .trigonometry-synth: Object has additional property `links`
+- .trigonometry-synth: Object has additional property `media`
+- .trigonometry-synth.metadata.aliases: Value has type array, which does not match type array
+- .trigonometry-synth.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .trigonometry-synth.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .trigonometry-synth.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .trigonometry-synth.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .trigonometry-synth.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .trigonometry-synth.metadata.made with: Value has type array, which does not match type array
+- .trigonometry-synth.metadata.tags: Value has type array, which does not match type array
+- .trigonometry-synth.metadata: Object is missing properties `titlestyle`, `finished`, `thumbnail`, `page background`, `started`
+- .trigonometry-synth: Object has additional property `paragraphs`
+- .trigonometry-synth: Object has additional property `title`
+- .trigonometry-synth: Object is missing properties `layout`, `content`
+- .ultisnips-tools: Object has additional property `footnotes`
+- .ultisnips-tools: Object has additional property `links`
+- .ultisnips-tools: Object has additional property `media`
+- .ultisnips-tools.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .ultisnips-tools.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .ultisnips-tools.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .ultisnips-tools.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .ultisnips-tools.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .ultisnips-tools.metadata.made with: Value has type array, which does not match type array
+- .ultisnips-tools.metadata.tags: Value has type array, which does not match type array
+- .ultisnips-tools.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `thumbnail`, `page background`, `started`
+- .ultisnips-tools: Object has additional property `paragraphs`
+- .ultisnips-tools: Object has additional property `title`
+- .ultisnips-tools: Object is missing properties `layout`, `content`
+- .wikitrad: Object has additional property `footnotes`
+- .wikitrad: Object has additional property `links`
+- .wikitrad: Object has additional property `media`
+- .wikitrad.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .wikitrad.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .wikitrad.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .wikitrad.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .wikitrad.metadata.colors: Custom type `color swatches`: Object is missing property `tertiary`
+- .wikitrad.metadata.made with: Value has type array, which does not match type array
+- .wikitrad.metadata.tags: Value has type array, which does not match type array
+- .wikitrad.metadata: Object is missing properties `aliases`, `titlestyle`, `finished`, `wip`, `page background`, `started`
+- .wikitrad: Object has additional property `paragraphs`
+- .wikitrad: Object has additional property `title`
+- .wikitrad: Object is missing properties `layout`, `content`
+- .work: Object has additional property `footnotes`
+- .work: Object has additional property `links`
+- .work: Object has additional property `media`
+- .work.metadata.aliases: Value has type array, which does not match type array
+- .work.metadata.colors.primary: Custom type `color swatches`: Value has type string, which does not match type array
+- .work.metadata.colors.primary: Custom type `color swatches`: Value does not match any of the types
+- .work.metadata.colors.secondary: Custom type `color swatches`: Value has type string, which does not match type array
+- .work.metadata.colors.secondary: Custom type `color swatches`: Value does not match any of the types
+- .work.metadata.colors.tertiary: Custom type `color swatches`: Value has type string, which does not match type array
+- .work.metadata.colors.tertiary: Custom type `color swatches`: Value does not match any of the types
+- .work.metadata.made with: Value has type array, which does not match type array
+- .work.metadata.started: String is not a valid date: Parser Error: 
+- .work.metadata.tags: Value has type array, which does not match type array
+- .work.metadata.titlestyle: Value is not any of the allowed values: Array [String("filled"), String("outline")]
+- .work: Object has additional property `paragraphs`
+- .work: Object has additional property `title`
+- .work: Object is missing properties `layout`, `content`

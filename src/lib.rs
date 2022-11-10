@@ -2,6 +2,7 @@ use regex::Regex;
 use serde_json::Value;
 use std::{
     collections::HashMap,
+    ffi::OsStr,
     fs::{self, File},
     hash::Hash,
     io::BufReader,
@@ -15,6 +16,8 @@ pub struct ValidationError {
     pub message: String,
 }
 
+pub type Typeshed = HashMap<String, CommentedType>;
+
 #[derive(Debug, Clone)]
 pub enum Type {
     String,
@@ -25,6 +28,12 @@ pub enum Type {
     AnyArray,
     AnyObject,
     Any,
+    Color,
+    Date,
+    DateTime,
+    Time,
+    HTML,
+    URL,
     /// Object(values, additional properties allowed ?)
     Object(HashMap<String, CommentedType>, bool),
     Array(Box<CommentedType>),
@@ -33,19 +42,72 @@ pub enum Type {
     AllOf(Vec<CommentedType>),
     RegexPattern(Regex),
     Literal(serde_json::Value),
+    LiteralString(String),
     /// Written {"(one of literally)": ["a", "b"]} shortcut for {"(one of)": ["literally a", "literally b", …]}
     Enum(Vec<serde_json::Value>),
+    Custom(String, Box<CommentedType>),
+}
+
+impl core::fmt::Display for Type {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.type_name())
+    }
+}
+
+impl Type {
+    fn type_name(&self) -> String {
+        match self {
+            Type::String => "string".to_owned(),
+            Type::Number => "number".to_owned(),
+            Type::Float => "float".to_owned(),
+            Type::Integer => "integer".to_owned(),
+            Type::Color => "color".to_owned(),
+            Type::Boolean => "boolean".to_owned(),
+            Type::AnyArray => "array".to_owned(),
+            Type::AnyObject => "object".to_owned(),
+            Type::Any => "any".to_owned(),
+            Type::Date => "date".to_owned(),
+            Type::DateTime => "datetime".to_owned(),
+            Type::Time => "time".to_owned(),
+            Type::HTML => "html".to_owned(),
+            Type::URL => "url".to_owned(),
+            Type::Object(_, _) => "object".to_owned(),
+            Type::Array(_) => "array".to_owned(),
+            Type::FixedSizeArray(_) => "array".to_owned(),
+            Type::OneOf(types) => format!(
+                "one of {}",
+                types
+                    .iter()
+                    .map(|t| t.0.type_name())
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+            Type::AllOf(types) => format!(
+                "all of {}",
+                types
+                    .iter()
+                    .map(|t| t.0.type_name())
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+            Type::RegexPattern(_) => "regex pattern".to_owned(),
+            Type::Literal(value) => serde_type_name(value),
+            Type::LiteralString(_) => "string".to_owned(),
+            Type::Enum(_) => "enum".to_owned(),
+            Type::Custom(name, _) => name.clone(),
+        }
+    }
 }
 
 pub type CommentedType = (Type, String);
 
 pub struct Schema {
-    pub types: HashMap<String, Type>,
+    pub types: Typeshed,
     pub value: CommentedType,
 }
 
 fn into_serde_value(path: PathBuf) -> Result<serde_json::Value, Box<dyn std::error::Error>> {
-    match path.extension() {
+    match path.extension().map(|s| s.to_str().unwrap_or_default()) {
         Some("yaml") | Some("yml") => {
             let file = File::open(path)?;
             let reader = BufReader::new(file);
@@ -68,13 +130,13 @@ fn into_serde_value(path: PathBuf) -> Result<serde_json::Value, Box<dyn std::err
 
 fn load_type(
     value: serde_json::Value,
-    custom_types: HashMap<String, Type>,
+    custom_types: &mut Typeshed,
 ) -> Result<CommentedType, Box<dyn std::error::Error>> {
-    let mut documentation = "";
-    let value = match value {
+    let mut documentation = "".to_owned();
+    let value = match value.clone() {
         Value::Array(elements) => match elements.len() {
             0 => Type::Literal(value),
-            1 => Type::Array(Box::new(load_type(elements[0], custom_types)?)),
+            1 => Type::Array(Box::new(load_type(elements[0].clone(), custom_types)?)),
             _ => {
                 let mut types = Vec::new();
                 for element in elements {
@@ -87,12 +149,12 @@ fn load_type(
         Value::String(s) => {
             let typestring = match s.split_once(", ") {
                 Some((typestr, doc)) => {
-                    documentation = doc;
-                    typestr
+                    documentation = doc.clone().to_string();
+                    typestr.to_owned()
                 }
-                None => s.as_str(),
+                None => s.to_string(),
             };
-            match typestring {
+            match typestring.as_str() {
                 "string" => Type::String,
                 "number" => Type::Number,
                 "float" => Type::Float,
@@ -100,23 +162,34 @@ fn load_type(
                 "boolean" => Type::Boolean,
                 "array" => Type::AnyArray,
                 "object" => Type::AnyObject,
+                "date" => Type::Date,
+                "datetime" => Type::DateTime,
+                "empty string" => Type::LiteralString("".to_owned()),
+                "time" => Type::Time,
+                "color" => Type::Color,
                 "any" => Type::Any,
+                "url" => Type::URL,
+                "html" => Type::HTML,
                 "null" => Type::Literal(Value::Null),
-                _ if s.starts_with("literally ") => Type::Literal(Value::String(
-                    s.strip_prefix("literally ").unwrap().to_string(),
-                )),
-                _ if s.starts_with("just ") => {
-                    Type::Literal(Value::String(s.strip_prefix("just ").unwrap().to_string()))
+                _ if typestring.starts_with("literally ") => {
+                    Type::LiteralString(typestring["literally ".len()..].to_string())
                 }
-                _ if s.starts_with("matches regex ") => {
-                    Type::RegexPattern(Regex::new(s.strip_prefix("matches regex ").unwrap())?)
+                _ if typestring.starts_with("just ") => {
+                    Type::LiteralString(typestring["just ".len()..].to_string())
                 }
-                _ => return Err("Invalid type".into()),
+                _ if typestring.starts_with("matches regex ") => Type::RegexPattern(Regex::new(
+                    typestring.strip_prefix("matches regex ").unwrap(),
+                )?),
+                _ if custom_types.contains_key(&typestring) => Type::Custom(
+                    typestring.to_string(),
+                    Box::new(custom_types[&typestring].clone()),
+                ),
+                _ => return Err(format!("Invalid type {:?}", s).into()),
             }
         }
         Value::Object(map) => {
             if map.is_empty() {
-                Type::Literal(value)
+                Type::Literal(value.clone())
             } else {
                 match map.keys().next().unwrap().as_str() {
                     "(one of)" | "(all of)" if map.len() == 1 => {
@@ -130,7 +203,7 @@ fn load_type(
                             Type::AllOf(types)
                         }
                     }
-                    "(one of literally)" if map.len() == 1 => {
+                    "(one of literally)" | "(enum)" if map.len() == 1 => {
                         let mut literals = Vec::new();
                         for value in map.values() {
                             literals.push(value.clone());
@@ -140,22 +213,22 @@ fn load_type(
                     _ => {
                         let mut properties = HashMap::new();
                         let mut additional_properties = false;
+                        if map.contains_key("(types)") {
+                            let value = map["(types)"].clone();
+                            let Some(typeshed) = value.as_object() else {
+                                return Err("Typeshed must be an object mapping type names to types".into());
+                            };
+                            for (key, value) in typeshed {
+                                let loaded_type = load_type(value.clone(), custom_types)?;
+                                custom_types.insert(key.clone(), loaded_type);
+                            }
+                        }
                         for (key, value) in map {
                             match key.as_str() {
-                                "(additional properties)" => {
+                                "(additional properties)" | "(additional keys)" => {
                                     additional_properties = value.as_bool().unwrap();
                                 }
-                                "(types)" => {
-                                    let Some(typeshed) = value.as_object() else {
-                                        return Err("Typeshed must be an object mapping type names to types".into());
-                                    };
-                                    for (key, value) in typeshed {
-                                        custom_types.insert(
-                                            key.clone(),
-                                            load_type(value.clone(), custom_types)?.0,
-                                        );
-                                    }
-                                }
+                                "(types)" => {}
                                 _ => {
                                     properties.insert(key, load_type(value, custom_types)?);
                                 }
@@ -172,42 +245,63 @@ fn load_type(
 
 pub fn load(path: PathBuf) -> Result<Schema, Box<dyn std::error::Error>> {
     let value = into_serde_value(path)?;
-    let custom_types: HashMap<String, Type> = HashMap::new();
-    let (value, documentation) = load_type(value, custom_types)?;
+    let mut custom_types: HashMap<String, CommentedType> = HashMap::new();
+    let (typ, documentation) = load_type(value, &mut custom_types)?;
     Ok(Schema {
         types: custom_types,
-        value: (value, documentation),
+        value: (typ, documentation),
     })
+}
+
+fn serde_type_name(object: &Value) -> String {
+    match object {
+        Value::Array(_) => "array".to_string(),
+        Value::Bool(_) => "boolean".to_string(),
+        Value::Null => "null".to_string(),
+        Value::Number(_) => "number".to_string(),
+        Value::String(_) => "string".to_string(),
+        Value::Object(_) => "object".to_string(),
+    }
 }
 
 pub fn validate_value(
     file: PathBuf,
     location: Vec<String>,
-    typ: CommentedType,
-    value: Value,
+    typ: &CommentedType,
+    value: &Value,
+    custom_types: &Typeshed,
 ) -> Result<Vec<ValidationError>, Box<dyn std::error::Error>> {
+    // println!(
+    //     "at {}:{}: looking for {} in {} value",
+    //     file.display(),
+    //     location.join("."),
+    //     typ.0,
+    //     serde_type_name(value)
+    // );
     let mut validation_errors = Vec::new();
-    match (value, typ.0) {
+    match (value, &typ.0) {
         (_, Type::Any) => Ok(Vec::new()),
-        (Value::Array(elements), Type::AnyArray) => Ok(Vec::new()),
+        (Value::Array(_), Type::AnyArray) => Ok(Vec::new()),
         (Value::Array(elements), Type::FixedSizeArray(types)) => {
             if elements.len() != types.len() {
                 validation_errors.push(ValidationError {
-                    message: "Array length does not match fixed size".to_owned(),
+                    message: format!("Array length does not match fixed size {}", types.len())
+                        .to_owned(),
                     path: location.clone(),
-                    file,
+                    file: file.clone(),
                 });
             } else {
                 for (i, element) in elements.iter().enumerate() {
                     validation_errors.append(&mut validate_value(
-                        file,
+                        file.clone(),
                         {
-                            let newloc = location.clone();
+                            let mut newloc = location.clone();
                             newloc.push(i.to_string());
                             newloc
                         },
-                        *types[i].clone(),
-                        element.clone(),
+                        &types[i],
+                        element,
+                        custom_types,
                     )?);
                 }
             }
@@ -236,57 +330,199 @@ pub fn validate_value(
             }
             Ok(validation_errors)
         }
+        (Value::String(s), Type::Color) => match s.parse::<css_color::Srgb>() {
+            Ok(_) => Ok(Vec::new()),
+            Err(e) => {
+                validation_errors.push(ValidationError {
+                    message: format!("String is not a valid color: {:?}", e),
+                    path: location.clone(),
+                    file,
+                });
+                Ok(validation_errors)
+            }
+        },
+        (Value::String(s), Type::HTML) => match html_parser::Dom::parse(s) {
+            Ok(_) => Ok(Vec::new()),
+            Err(html_parser::Error::Parsing(e)) => {
+                validation_errors.push(ValidationError {
+                    message: format!("String is not valid HTML: {}", e),
+                    path: location.clone(),
+                    file,
+                });
+                Ok(validation_errors)
+            }
+            Err(e) => {
+                return Err(format!("Error while validating HTML: {:?}", e).into());
+            }
+        },
+        (Value::String(s), Type::Date) => match iso8601::date(s) {
+            Ok(_) => Ok(Vec::new()),
+            Err(e) => {
+                validation_errors.push(ValidationError {
+                    message: format!("String is not a valid date: {}", e),
+                    path: location.clone(),
+                    file,
+                });
+                Ok(validation_errors)
+            }
+        },
+        (Value::String(s), Type::DateTime) => match iso8601::datetime(s) {
+            Ok(_) => Ok(Vec::new()),
+            Err(e) => {
+                validation_errors.push(ValidationError {
+                    message: format!("String is not a valid datetime: {}", e),
+                    path: location.clone(),
+                    file,
+                });
+                Ok(validation_errors)
+            }
+        },
+        (Value::String(s), Type::Time) => match iso8601::time(s) {
+            Ok(_) => Ok(Vec::new()),
+            Err(e) => {
+                validation_errors.push(ValidationError {
+                    message: format!("String is not a valid time: {}", e),
+                    path: location.clone(),
+                    file,
+                });
+                Ok(validation_errors)
+            }
+        },
+        (Value::String(s), Type::URL) => {
+            if validator::validate_url(s) {
+                Ok(validation_errors)
+            } else {
+                validation_errors.push(ValidationError {
+                    message: "String is not a valid URL".to_owned(),
+                    path: location.clone(),
+                    file,
+                });
+                Ok(validation_errors)
+            }
+        }
         (Value::String(_), Type::String) => Ok(Vec::new()),
         (Value::String(s), Type::RegexPattern(regex)) => {
             if !regex.is_match(&s) {
                 validation_errors.push(ValidationError {
-                    message: "String does not match regex".to_owned(),
+                    message: format!("String does not match regex {}", regex).to_owned(),
                     path: location.clone(),
                     file,
                 });
             }
             Ok(validation_errors)
         }
-        (Value::String(s), Type::Literal(Value::String(literal))) => {
+        (
+            Value::String(s),
+            Type::Literal(Value::String(ref literal)) | Type::LiteralString(ref literal),
+        ) => {
             if s != literal {
                 validation_errors.push(ValidationError {
-                    message: "String is not literally".to_owned(),
+                    message: format!("String is not literally {:?}", literal).to_owned(),
                     path: location.clone(),
-                    file,
+                    file: file.clone(),
                 });
             }
             Ok(validation_errors)
         }
         (Value::Object(map), Type::Object(properties, additional_properties)) => {
             for (key, value) in map {
-                if properties.contains_key(&key) {
+                if properties.contains_key(key) {
                     validation_errors.append(&mut validate_value(
-                        file,
+                        file.clone(),
                         {
                             let mut newloc = location.clone();
-                            newloc.push(key);
+                            newloc.push(key.to_string());
                             newloc
                         },
-                        properties[&key].clone(),
+                        &properties[key],
                         value,
+                        custom_types,
                     )?);
+                    // If there's a generic key in the type's properties, we check that additional keys conform.
+                } else if let Some(generic_key) = properties
+                    .keys()
+                    .find(|k| k.starts_with("(") && k.ends_with(")"))
+                {
+                    let (key_typename, _) = generic_key
+                        .strip_prefix("(")
+                        .unwrap()
+                        .strip_suffix(")")
+                        .unwrap()
+                        .split_once(", ")
+                        .unwrap_or((&key, ""));
+                    if custom_types.contains_key(key_typename) {
+                        validation_errors.append(&mut validate_value(
+                            file.clone(),
+                            {
+                                let mut newloc = location.clone();
+                                newloc.push("(key)".to_string());
+                                newloc
+                            },
+                            &custom_types[key_typename],
+                            &Value::String(key.to_string()),
+                            custom_types,
+                        )?);
+                        validation_errors.append(&mut validate_value(
+                            file.clone(),
+                            {
+                                let mut newloc = location.clone();
+                                newloc.push(key.to_string());
+                                newloc
+                            },
+                            &properties[generic_key],
+                            value,
+                            custom_types,
+                        )?);
+                    } else {
+                        validation_errors.push(ValidationError {
+                            message: format!("Unknown custom type `{}`", key_typename).to_owned(),
+                            path: location.clone(),
+                            file: file.clone(),
+                        });
+                    }
                 } else if !additional_properties {
                     validation_errors.push(ValidationError {
-                        message: "Object has additional properties".to_owned(),
+                        message: format!("Object has additional property `{}`", key).to_owned(),
                         path: location.clone(),
-                        file,
+                        file: file.clone(),
                     });
                 }
+            }
+            let missing_keys = properties
+                .keys()
+                .filter(|key| !(key.starts_with("(") && key.ends_with(")")))
+                .filter(|key| !map.contains_key(*key))
+                .collect::<Vec<_>>();
+            if !missing_keys.is_empty() {
+                validation_errors.push(ValidationError {
+                    message: format!(
+                        "Object is missing {} {}",
+                        if missing_keys.len() == 1 {
+                            "property"
+                        } else {
+                            "properties"
+                        },
+                        missing_keys
+                            .into_iter()
+                            .map(|k| format!("`{}`", k))
+                            .collect::<Vec<_>>()
+                            .join(", ")
+                    )
+                    .to_owned(),
+                    path: location.clone(),
+                    file: file.clone(),
+                });
             }
             Ok(validation_errors)
         }
         (value, Type::AllOf(types)) => {
             for typ in types {
                 validation_errors.append(&mut validate_value(
-                    file,
+                    file.clone(),
                     location.clone(),
-                    typ,
-                    value.clone(),
+                    &typ,
+                    value,
+                    custom_types,
                 )?);
             }
             Ok(validation_errors)
@@ -294,7 +530,8 @@ pub fn validate_value(
         (value, Type::OneOf(types)) => {
             let mut valid = false;
             for typ in types {
-                let mut errors = validate_value(file, location.clone(), typ, value.clone())?;
+                let mut errors =
+                    validate_value(file.clone(), location.clone(), &typ, value, custom_types)?;
                 if errors.is_empty() {
                     valid = true;
                     break;
@@ -321,17 +558,38 @@ pub fn validate_value(
             }
             if !valid {
                 validation_errors.push(ValidationError {
-                    message: format!("Value is not any of the allowed values: {:?}", literals)
-                        .to_owned(),
+                    message: format!("Value is not any of the allowed values: {}", literals.into_iter().map(|l| format!("{:?}", l)).collect::<Vec<_>>().join(", ")).to_owned(),
                     path: location.clone(),
                     file,
                 });
             }
             Ok(validation_errors)
-        },
+        }
+        (value, Type::Custom(type_name, spec)) => {
+            let validation_sub_errors =
+                validate_value(file.clone(), location.clone(), spec, value, custom_types)?;
+            if !validation_sub_errors.is_empty() {
+                validation_errors.append(
+                    &mut validation_sub_errors
+                        .into_iter()
+                        .map(|e| ValidationError {
+                            message: format!("Custom type `{}`: {}", type_name, e.message),
+                            path: e.path,
+                            file: e.file,
+                        })
+                        .collect::<Vec<_>>(),
+                );
+            }
+            Ok(validation_errors)
+        }
         _ => {
             validation_errors.push(ValidationError {
-                message: "Value does not match type".to_owned(),
+                message: format!(
+                    "Value has type {}, which does not match type {}",
+                    serde_type_name(value),
+                    typ.0.type_name()
+                )
+                .to_owned(),
                 path: location.clone(),
                 file,
             });
@@ -345,10 +603,11 @@ pub fn validate_one(
     input_file: PathBuf,
 ) -> Result<Vec<ValidationError>, Box<dyn std::error::Error>> {
     let validation_errors = validate_value(
-        input_file,
+        input_file.clone(),
         Vec::new(),
-        schema.value,
-        serde_json::from_reader(File::open(input_file)?)?,
+        &schema.value,
+        &serde_json::from_reader(File::open(input_file)?)?,
+        &schema.types,
     )?;
     Ok(validation_errors)
 }
@@ -357,7 +616,7 @@ pub fn validate(
     schema: Schema,
     input_files: Vec<PathBuf>,
 ) -> Result<Vec<ValidationError>, Box<dyn std::error::Error>> {
-    let validation_errors = vec![];
+    let mut validation_errors = vec![];
     for file in input_files {
         validation_errors.extend(validate_one(&schema, file)?);
     }

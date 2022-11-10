@@ -6,9 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+css-color = "0.2.4"
 docopt = "1.1.1"
+html_parser = "0.6.3"
+iso8601 = "0.5.1"
 regex = "1.7.0"
 serde = "1.0.147"
 serde_json = "1.0.87"
 serde_yaml = "0.9.14"
 toml = "0.5.9"
+validator = "0.16.0"

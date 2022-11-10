@@ -1,0 +1,79 @@
+{
+  "(types)": {
+    "nanoid": "matches regex [\\w_-]{10}",
+    "color swatches": {
+      "primary": { "(one of)": ["color", "empty string"] },
+      "secondary": { "(one of)": ["color", "empty string"] },
+      "tertiary": { "(one of)": ["color", "empty string"] }
+    },
+    "content type": "matches regex (application|audio|font|image|message|model|multipart|text|video)/[\\w\\d\\-\\+\\.]+",
+    "slug": "matches regex [\\w\\d\\-]+"
+  },
+  "(slug, id of work)": {
+    "metadata": {
+      "aliases": [],
+      "finished": "date",
+      "started": "date",
+      "made with": ["string"],
+      "tags": ["string"],
+      "thumbnail": "string",
+      "titlestyle": { "(enum)": ["filled", "outline"] },
+      "colors": "color swatches",
+      "page background": "string, file path, relative to project root",
+      "wip": "boolean",
+      "(additional keys)": true
+    },
+    "id": "slug",
+    "layout": {
+      "(string, language code)": [["nanoid, of content item"]]
+    },
+    "content": {
+      "(string, language code)": [
+        {
+          "(one of)": [
+            {
+              "type": "literally paragraph",
+              "id": "nanoid",
+              "anchor": "string",
+              "content": "string"
+            },
+            {
+              "type": "literally link",
+              "id": "nanoid",
+              "anchor": "string",
+              "text": "html",
+              "title": "string",
+              "url": "url"
+            },
+            {
+              "type": "literally media",
+              "id": "nanoid",
+              "anchor": "string",
+              "alt": "string",
+              "title": "string",
+              "source": "string, file path, relative to media root",
+              "original_source": "string, file path, relative to project root",
+              "content_type": "content type",
+              "size": "integer, in bytes",
+              "dimensions": {
+                "width": "integer, in pixels",
+                "height": "integer, in pixels",
+                "aspect_ratio": "float"
+              },
+              "online": "boolean",
+              "duration": "float, in seconds",
+              "extracted_colors": {
+                "primary": "color",
+                "secondary": "color",
+                "tertiary": "color"
+              },
+              "thumbnails": {
+                "(integer, in pixels)": "string, file path, relative to media root"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
