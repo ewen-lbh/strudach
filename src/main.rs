@@ -1,13 +1,14 @@
 use docopt::Docopt;
-use std::{path::PathBuf, str::FromStr};
+use std::{fs, path::PathBuf, str::FromStr};
 
 // TODO: allow stdin
 // Usage: strudach [options] (<schema> | -) <input>...
 //        strudach [options] convert <schema> [<output>]
 
 const USAGE: &'static str = "
-Usage: strudach [options] <schema> <input>...
-       strudach [options] convert <schema> <output>
+Usage: strudach [options] convert <schema> <output>
+       strudach [options] <schema> <input>...
+       
 
 Options:
     -h, --help          Show this message.
@@ -20,7 +21,7 @@ fn main() {
         .unwrap_or_else(|e| e.exit());
 
     let schema_file = PathBuf::from_str(args.get_str("<schema>"));
-    let schema = match strudach::load(schema_file.unwrap()) {
+    let mut schema = match strudach::load(schema_file.unwrap()) {
         Ok(s) => s,
         Err(e) => {
             println!("Error loading schema: {}", e);
@@ -30,14 +31,25 @@ fn main() {
 
     if args.get_bool("convert") {
         let output_file = args.get_str("<output>");
-        println!("TODO")
+        let converted = strudach::to_jsonschema(&schema);
+        let jsoned = match serde_json::to_string_pretty(&converted) {
+            Ok(j) => j,
+            Err(e) => {
+                println!("Error converting schema: {}", e);
+                return;
+            }
+        };
+        if let Err(e) = fs::write(output_file, jsoned) {
+            println!("Error writing output: {}", e);
+            return;
+        }
     } else {
         let input_files: Vec<PathBuf> = args
             .get_vec("<input>")
             .into_iter()
             .map(|f| PathBuf::from_str(f).unwrap())
             .collect();
-        let validation_errors = match strudach::validate(schema, input_files) {
+        let validation_errors = match strudach::validate(&mut schema, input_files) {
             Ok(errors) => errors,
             Err(e) => {
                 println!("Error while validating: {}", e);

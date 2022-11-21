@@ -1,0 +1,281 @@
+{
+  "$defs": {
+    "color swatches": {
+      "properties": {
+        "primary": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": ""
+            }
+          ]
+        },
+        "secondary": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": ""
+            }
+          ]
+        },
+        "tertiary": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": ""
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "content type": {
+      "pattern": "(application|audio|font|image|message|model|multipart|text|video)/[\\w\\d\\-\\+\\.]+",
+      "type": "string"
+    },
+    "nanoid": {
+      "pattern": "[\\w_-]{10}",
+      "type": "string"
+    },
+    "slug": {
+      "pattern": "[\\w\\d\\-]+",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "(slug, id of work)": {
+      "properties": {
+        "content": {
+          "properties": {
+            "(string, language code)": {
+              "items": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "anchor": {
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "$ref": "#/definitions/nanoid"
+                      },
+                      "type": {
+                        "const": "paragraph"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "anchor": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "$ref": "#/definitions/nanoid"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "const": "link"
+                      },
+                      "url": {
+                        "format": "uri",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "alt": {
+                        "type": "string"
+                      },
+                      "anchor": {
+                        "type": "string"
+                      },
+                      "content_type": {
+                        "$ref": "#/definitions/content type"
+                      },
+                      "dimensions": {
+                        "properties": {
+                          "aspect_ratio": {
+                            "format": "float",
+                            "type": "number"
+                          },
+                          "height": {
+                            "description": "in pixels",
+                            "type": "integer"
+                          },
+                          "width": {
+                            "description": "in pixels",
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "duration": {
+                        "description": "in seconds",
+                        "format": "float",
+                        "type": "number"
+                      },
+                      "extracted_colors": {
+                        "properties": {
+                          "primary": {
+                            "type": "string"
+                          },
+                          "secondary": {
+                            "type": "string"
+                          },
+                          "tertiary": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "id": {
+                        "$ref": "#/definitions/nanoid"
+                      },
+                      "online": {
+                        "type": "boolean"
+                      },
+                      "original_source": {
+                        "description": "file path, relative to project root",
+                        "type": "string"
+                      },
+                      "size": {
+                        "description": "in bytes",
+                        "type": "integer"
+                      },
+                      "source": {
+                        "description": "file path, relative to media root",
+                        "type": "string"
+                      },
+                      "thumbnails": {
+                        "properties": {
+                          "(integer, in pixels)": {
+                            "description": "file path, relative to media root",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "const": "media"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "footnotes": {
+          "properties": {
+            "(string, language code)": {
+              "properties": {
+                "(string, footnote ref)": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "$ref": "#/definitions/slug"
+        },
+        "layout": {
+          "properties": {
+            "(string, language code)": {
+              "items": {
+                "items": {
+                  "$ref": "#/definitions/nanoid",
+                  "description": "of content item"
+                },
+                "type": "array"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "properties": {
+            "aliases": {
+              "const": []
+            },
+            "colors": {
+              "$ref": "#/definitions/color swatches"
+            },
+            "finished": {
+              "format": "date",
+              "type": "string"
+            },
+            "made with": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "page background": {
+              "description": "file path, relative to project root",
+              "type": "string"
+            },
+            "started": {
+              "format": "date",
+              "type": "string"
+            },
+            "tags": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "titlestyle": {
+              "enum": [
+                "[\"filled\",\"outline\",\"\"]"
+              ]
+            },
+            "wip": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "title": {
+          "properties": {
+            "(string, language code)": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

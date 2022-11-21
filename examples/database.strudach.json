@@ -17,7 +17,7 @@
       "made with": ["string"],
       "tags": ["string"],
       "thumbnail": "string",
-      "titlestyle": { "(enum)": ["filled", "outline"] },
+      "titlestyle": { "(enum)": ["filled", "outline", ""] },
       "colors": "color swatches",
       "page background": "string, file path, relative to project root",
       "wip": "boolean",
@@ -26,6 +26,14 @@
     "id": "slug",
     "layout": {
       "(string, language code)": [["nanoid, of content item"]]
+    },
+    "title": {
+      "(string, language code)": "string"
+    },
+    "footnotes": {
+      "(string, language code)": {
+        "(string, footnote ref)": "string"
+      }
     },
     "content": {
       "(string, language code)": [

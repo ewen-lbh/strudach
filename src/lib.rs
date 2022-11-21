@@ -2,11 +2,9 @@ use regex::Regex;
 use serde_json::Value;
 use std::{
     collections::HashMap,
-    ffi::OsStr,
     fs::{self, File},
-    hash::Hash,
     io::BufReader,
-    path::{Path, PathBuf},
+    path::PathBuf,
 };
 
 pub struct ValidationError {
@@ -46,6 +44,10 @@ pub enum Type {
     /// Written {"(one of literally)": ["a", "b"]} shortcut for {"(one of)": ["literally a", "literally b", …]}
     Enum(Vec<serde_json::Value>),
     Custom(String, Box<CommentedType>),
+}
+
+fn warn(txt: &'static str) -> () {
+    println!("WARN: {}", txt)
 }
 
 impl core::fmt::Display for Type {
@@ -194,8 +196,16 @@ fn load_type(
                 match map.keys().next().unwrap().as_str() {
                     "(one of)" | "(all of)" if map.len() == 1 => {
                         let mut types = Vec::new();
-                        for value in map.values() {
-                            types.push(load_type(value.clone(), custom_types)?);
+                        if let Some(Value::Array(specs)) = map.values().next() {
+                            for value in specs {
+                                types.push(load_type(value.clone(), custom_types)?);
+                            }
+                        } else {
+                            return Err(format!(
+                                "{} must be an array of possibles types",
+                                map.keys().next().unwrap()
+                            )
+                            .into());
                         }
                         if map.keys().next().unwrap() == "(one of)" {
                             Type::OneOf(types)
@@ -269,19 +279,35 @@ pub fn validate_value(
     location: Vec<String>,
     typ: &CommentedType,
     value: &Value,
-    custom_types: &Typeshed,
+    custom_types: &mut Typeshed,
 ) -> Result<Vec<ValidationError>, Box<dyn std::error::Error>> {
-    // println!(
-    //     "at {}:{}: looking for {} in {} value",
-    //     file.display(),
-    //     location.join("."),
-    //     typ.0,
-    //     serde_type_name(value)
-    // );
+    println!(
+        "at {}:{}: looking for {} in {} value",
+        file.display(),
+        location.join("."),
+        typ.0,
+        serde_type_name(value)
+    );
     let mut validation_errors = Vec::new();
     match (value, &typ.0) {
         (_, Type::Any) => Ok(Vec::new()),
         (Value::Array(_), Type::AnyArray) => Ok(Vec::new()),
+        (Value::Array(elements), Type::Array(elements_type)) => {
+            for (i, element) in elements.iter().enumerate() {
+                validation_errors.append(&mut validate_value(
+                    file.clone(),
+                    {
+                        let mut newloc = location.clone();
+                        newloc.push(i.to_string());
+                        newloc
+                    },
+                    &elements_type,
+                    element,
+                    custom_types,
+                )?);
+            }
+            Ok(validation_errors)
+        }
         (Value::Array(elements), Type::FixedSizeArray(types)) => {
             if elements.len() != types.len() {
                 validation_errors.push(ValidationError {
@@ -442,44 +468,31 @@ pub fn validate_value(
                 } else if let Some(generic_key) = properties
                     .keys()
                     .find(|k| k.starts_with("(") && k.ends_with(")"))
+                    .map(|k| k.strip_prefix("(").unwrap().strip_suffix(")").unwrap())
                 {
-                    let (key_typename, _) = generic_key
-                        .strip_prefix("(")
-                        .unwrap()
-                        .strip_suffix(")")
-                        .unwrap()
-                        .split_once(", ")
-                        .unwrap_or((&key, ""));
-                    if custom_types.contains_key(key_typename) {
-                        validation_errors.append(&mut validate_value(
-                            file.clone(),
-                            {
-                                let mut newloc = location.clone();
-                                newloc.push("(key)".to_string());
-                                newloc
-                            },
-                            &custom_types[key_typename],
-                            &Value::String(key.to_string()),
-                            custom_types,
-                        )?);
-                        validation_errors.append(&mut validate_value(
-                            file.clone(),
-                            {
-                                let mut newloc = location.clone();
-                                newloc.push(key.to_string());
-                                newloc
-                            },
-                            &properties[generic_key],
-                            value,
-                            custom_types,
-                        )?);
-                    } else {
-                        validation_errors.push(ValidationError {
-                            message: format!("Unknown custom type `{}`", key_typename).to_owned(),
-                            path: location.clone(),
-                            file: file.clone(),
-                        });
-                    }
+                    let key_type = load_type(Value::String(generic_key.to_owned()), custom_types)?;
+                    validation_errors.append(&mut validate_value(
+                        file.clone(),
+                        {
+                            let mut newloc = location.clone();
+                            newloc.push("(key)".to_string());
+                            newloc
+                        },
+                        &key_type,
+                        &Value::String(key.to_string()),
+                        custom_types,
+                    )?);
+                    validation_errors.append(&mut validate_value(
+                        file.clone(),
+                        {
+                            let mut newloc = location.clone();
+                            newloc.push(key.to_string());
+                            newloc
+                        },
+                        &properties[&format!("({})", generic_key)],
+                        value,
+                        custom_types,
+                    )?);
                 } else if !additional_properties {
                     validation_errors.push(ValidationError {
                         message: format!("Object has additional property `{}`", key).to_owned(),
@@ -558,7 +571,15 @@ pub fn validate_value(
             }
             if !valid {
                 validation_errors.push(ValidationError {
-                    message: format!("Value is not any of the allowed values: {}", literals.into_iter().map(|l| format!("{:?}", l)).collect::<Vec<_>>().join(", ")).to_owned(),
+                    message: format!(
+                        "Value is not any of the allowed values: {}",
+                        literals
+                            .into_iter()
+                            .map(|l| format!("{:?}", l))
+                            .collect::<Vec<_>>()
+                            .join(", ")
+                    )
+                    .to_owned(),
                     path: location.clone(),
                     file,
                 });
@@ -566,6 +587,10 @@ pub fn validate_value(
             Ok(validation_errors)
         }
         (value, Type::Custom(type_name, spec)) => {
+            println!(
+                "Validating value of custom type {} with spec {:#?}",
+                type_name, spec
+            );
             let validation_sub_errors =
                 validate_value(file.clone(), location.clone(), spec, value, custom_types)?;
             if !validation_sub_errors.is_empty() {
@@ -599,7 +624,7 @@ pub fn validate_value(
 }
 
 pub fn validate_one(
-    schema: &Schema,
+    schema: &mut Schema,
     input_file: PathBuf,
 ) -> Result<Vec<ValidationError>, Box<dyn std::error::Error>> {
     let validation_errors = validate_value(
@@ -607,18 +632,250 @@ pub fn validate_one(
         Vec::new(),
         &schema.value,
         &serde_json::from_reader(File::open(input_file)?)?,
-        &schema.types,
+        &mut schema.types,
     )?;
     Ok(validation_errors)
 }
 
 pub fn validate(
-    schema: Schema,
+    schema: &mut Schema,
     input_files: Vec<PathBuf>,
 ) -> Result<Vec<ValidationError>, Box<dyn std::error::Error>> {
     let mut validation_errors = vec![];
     for file in input_files {
-        validation_errors.extend(validate_one(&schema, file)?);
+        validation_errors.extend(validate_one(schema, file)?);
     }
     Ok(validation_errors)
+}
+
+pub fn to_jsonschema(schema: &Schema) -> serde_json::Value {
+    let mut jsonschema = type_to_jsonschema(&schema.value);
+    let mut definitions = serde_json::Map::new();
+    for (name, typ) in schema.types.iter() {
+        definitions.insert(
+            name.clone(),
+            serde_json::Value::Object(type_to_jsonschema(typ)),
+        );
+    }
+    jsonschema.insert("$defs".to_string(), serde_json::Value::Object(definitions));
+    return serde_json::Value::Object(jsonschema);
+}
+
+pub fn type_to_jsonschema(value: &CommentedType) -> serde_json::Map<String, serde_json::Value> {
+    let mut out = serde_json::Map::new();
+
+    if value.1 != "" {
+        out.insert("description".to_string(), Value::String(value.1.clone()));
+    }
+
+    match &value.0 {
+        Type::AllOf(types) => {
+            out.insert(
+                "allOf".to_string(),
+                serde_json::Value::Array(
+                    types
+                        .into_iter()
+                        .map(|t| serde_json::Value::Object(type_to_jsonschema(&t)))
+                        .collect(),
+                ),
+            );
+        }
+        Type::Any => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("any".to_string()),
+            );
+        }
+        Type::AnyArray => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("array".to_string()),
+            );
+        }
+        Type::AnyObject => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("object".to_string()),
+            );
+        }
+        Type::Array(typ) => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("array".to_string()),
+            );
+            out.insert(
+                "items".to_string(),
+                serde_json::Value::Object(type_to_jsonschema(&typ)),
+            );
+        }
+        Type::Boolean => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("boolean".to_string()),
+            );
+        }
+        Type::Color => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+            warn("Color type is not supported in JSON Schema, yet.");
+        }
+        Type::Custom(typename, _) => {
+            out.insert(
+                "$ref".to_string(),
+                serde_json::Value::String(format!("#/definitions/{}", typename)),
+            );
+        }
+        Type::Date => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+            out.insert(
+                "format".to_string(),
+                serde_json::Value::String("date".to_string()),
+            );
+        }
+        Type::DateTime => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+            out.insert(
+                "format".to_string(),
+                serde_json::Value::String("date-time".to_string()),
+            );
+        }
+        Type::Enum(literals) => {
+            out.insert(
+                "enum".to_string(),
+                serde_json::Value::Array(
+                    literals
+                        .into_iter()
+                        .map(|l| serde_json::Value::String(l.to_string()))
+                        .collect(),
+                ),
+            );
+        }
+        Type::FixedSizeArray(types) => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("array".to_string()),
+            );
+            out.insert(
+                "items".to_string(),
+                serde_json::Value::Array(
+                    types
+                        .into_iter()
+                        .map(|t| serde_json::Value::Object(type_to_jsonschema(&t)))
+                        .collect(),
+                ),
+            );
+        }
+        Type::Float => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("number".to_string()),
+            );
+            out.insert(
+                "format".to_string(),
+                serde_json::Value::String("float".to_string()),
+            );
+        }
+        Type::HTML => {
+            warn("HTML is not convertible to json schema");
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+        }
+        Type::Integer => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("integer".to_string()),
+            );
+        }
+        Type::Literal(lit) => {
+            out.insert("const".to_string(), lit.clone());
+        }
+        Type::LiteralString(s) => {
+            out.insert("const".to_string(), Value::String(s.to_string()));
+        }
+        Type::Number => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("number".to_string()),
+            );
+        }
+        Type::Object(obj, additional_props) => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("object".to_string()),
+            );
+            let mut props = serde_json::Map::new();
+            for (key, value) in obj {
+                props.insert(
+                    key.to_string(),
+                    serde_json::Value::Object(type_to_jsonschema(value)),
+                );
+            }
+            out.insert("properties".to_string(), serde_json::Value::Object(props));
+            if *additional_props {
+                out.insert(
+                    "additionalProperties".to_string(),
+                    serde_json::Value::Bool(true),
+                );
+            }
+        }
+        Type::OneOf(types) => {
+            out.insert(
+                "oneOf".to_string(),
+                serde_json::Value::Array(
+                    types
+                        .into_iter()
+                        .map(|t| serde_json::Value::Object(type_to_jsonschema(&t)))
+                        .collect(),
+                ),
+            );
+        }
+        Type::RegexPattern(pat) => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+            out.insert(
+                "pattern".to_string(),
+                serde_json::Value::String(pat.to_string()),
+            );
+        }
+        Type::String => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+        }
+        Type::Time => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+            out.insert(
+                "format".to_string(),
+                serde_json::Value::String("time".to_string()),
+            );
+        }
+        Type::URL => {
+            out.insert(
+                "type".to_string(),
+                serde_json::Value::String("string".to_string()),
+            );
+            out.insert(
+                "format".to_string(),
+                serde_json::Value::String("uri".to_string()),
+            );
+        }
+    }
+
+    return out;
 }
