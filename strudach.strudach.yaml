@@ -1,0 +1,53 @@
+# strudach meta-schema (WIP)
+
+# todo parse commented types
+(types):
+  # todo recursive types (needed for `typ` usages)
+  int: just number
+  str: just string
+  flt: just float
+  bool: just boolean
+  anyarr: just array
+  anyobj: just object
+  _any: just any
+  colr: just color
+  dat: just date
+  datetim: just datetime
+  tim: just time
+  htm: just html
+  _url: just url
+  obj: 
+    (matches regex ^\(additional (keys|properties)\)$): typ
+    (literally (types)): typeshed
+    # todo somehow convey that you can do (type): ... ?
+    (string): typ # hopfully keys defined before get priority in matching?
+  arr: [typ] # todo array/fixed size array distinction
+  oneof:
+    (literally (one of)): [typ]
+  allof:
+    (literally (all of)): [typ]
+  regexpattern: matches regex ^matches regex .*$
+  literal: scalar
+  literalstring: 
+    (one of):
+      - matches regex ^(literally|just) .*
+      - matches regex ^'.*'$
+  enum:
+    (matches regex ^\(enum|one of literally\)$): [string]
+  typeshed:
+    string: typ
+  scalar: 
+    (one of): [int, str, flt, bool, anyarr, anyobj, _any, colr, dat, datetim, tim, htm, url_]
+  typ:
+    (one of): [scalar, obj, arr, oneof, allof, regexpattern, literal, literalstring, enum]
+
+(one of): 
+  - typ
+  - (literally (types)): typeshed # todo optional keys, cuz this shit wild...
+    (string): typ
+  - (literally (types)): typeshed
+    (literally (one of)): [typ]
+  - (literally (types)): typeshed
+    (literally (all of)): [typ]
+  - (literally (types)): typeshed
+    (literally (enum)): [string]
