@@ -40,13 +40,13 @@
         {
           "(one of)": [
             {
-              "type": "literally paragraph",
+              "type": "'paragraph'",
               "id": "nanoid",
               "anchor": "string",
               "content": "string"
             },
             {
-              "type": "literally link",
+              "type": "'link'",
               "id": "nanoid",
               "anchor": "string",
               "text": "html",
@@ -54,7 +54,7 @@
               "url": "url"
             },
             {
-              "type": "literally media",
+              "type": "'media'",
               "id": "nanoid",
               "anchor": "string",
               "alt": "string",

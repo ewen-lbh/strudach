@@ -179,6 +179,9 @@ fn load_type(
                 _ if typestring.starts_with("just ") => {
                     Type::LiteralString(typestring["just ".len()..].to_string())
                 }
+                _ if typestring.starts_with("'") && typestring.ends_with("'") -> {
+                    Type::LiteralString(typestring[1..typestring.len()-1].to_string())
+                }
                 _ if typestring.starts_with("matches regex ") => Type::RegexPattern(Regex::new(
                     typestring.strip_prefix("matches regex ").unwrap(),
                 )?),
